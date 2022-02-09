@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Authors</title>
+{% endblock %}
+
+{% block body %}
+<div class="nav">
+    <a class="home" href="/">Home</a>
+    <a href="books">Books</a>
+    <a class="active" href="authors">Authors</a></li>
+    <a href="publishers">Publishers</a>
+    <a href="customers">Customers</a>
+    <a href="orders">Orders</a>
+    <a href="order-details">Order Details</a>
+</div>
+
+<header>
+    <h1 class="app-title">Authors</h1>
+</header>
+<main class="main-content">
+    <table>
+        <tr>
+          <th>author_id</th>
+          <th>author_name</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>    </td>
+          <td>    </td>
+          <td><button type="button">Update</button></td>
+          <td><button type="button">Delete</button></td>
+        </tr>
+    </table>
+    
+    <h2>Add New Author</h2>
+    <form>
+        <label for="author_id">author_id:</label><br>
+        <input type="text" id="author_id" name="author_id"><br>
+        <label for="author_name">author_name:</label><br>
+        <input type="text" id="author_name" name="author_name"><br>
+        <input type="submit" value="Add">
+    </form>
+    <h2>Search for Author</h2>
+    <form>
+        <label for="author_name">author_name:</label><br>
+        <input type="text" id="author_name" name="author_name"><br>
+        <input type="submit" value="search">
+    </form>
+</main>
+<br>
+<a href="/">Back to Home Page</a>
+{% endblock %}

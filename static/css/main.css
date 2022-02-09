@@ -12,8 +12,13 @@ text-decoration: none;
 font-size: 20px;
 }
 
+.nav a.home {
+    background-color: black;
+    color: white;
+    }
+
 .nav a.active {
-background-color: #04AA6D;
+background-color: #9c9a9a;
 color: white;
 }
 
@@ -38,6 +43,7 @@ table, td, th {
 }
 
 table {
+    width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
 }
@@ -45,27 +51,4 @@ table {
 td {
     text-align: center;
     padding: 5px;
-}
-
-h3 {
-    margin-bottom: 5px;
-    font-size: calc(5px + 2vmin);
-}
-
-.form {
-    font-size: calc(5px + 1vmin);
-    width: 75%;
-    margin-bottom: 20px;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-.button {
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
 }

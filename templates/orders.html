@@ -5,63 +5,60 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <h1>Orders</h1>
+<div class="nav">
+    <a class="home" href="/">Home</a>
+    <a href="books">Books</a>
+    <a href="authors">Authors</a></li>
+    <a href="publishers">Publishers</a>
+    <a href="customers">Customers</a>
+    <a class="active" href="orders">Orders</a>
+    <a href="order-details">Order Details</a>
+</div>
 
-    <h3>Create Entries</h3>
-    <div class="form">
-        <form action="" method="POST">
-            <label for="customer_id">Customer ID:</label>
-            <input type="text" name="customer_id" id="customer_id">
-
-            <label for="first_name">First Name:</label>
-            <input type="text" name="first_name" id="first_name">
-
-            <label for="last_name">Last Name:</label>
-            <input type="text" name="last_name" id="last_name">
-
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email">
-
-            <label for="phone">Phone:</label>
-            <input type="text" name="phone" id="phone">
-
-            <label for="street">Street:</label>
-            <input type="text" name="street" id="street">
-
-            <label for="city">City:</label>
-            <input type="text" name="city" id="city">
-
-            <label for="zip">Zip:</label>
-            <input type="text" name="zip" id="zip">
-
-            <div class="center">
-                <input class="button" type="submit" value="Create">
-            </div>
-        </form>
-    </div>
-
+<header>
+    <h1 class="app-title">Orders</h1>
+</header>
+<main class="main-content">
     <table>
         <tr>
-            <th>Order ID</th>
-            <th>Customer ID</th>
-            <th>Date</th>
-            <th>Total Cost</th>
-            <th></th>
-            <th></th>
+          <th>order_id</th>
+          <th>customer_id</th>
+          <th>date</th>
+          <th>total_cost</th>
+          <th></th>
+          <th></th>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <a href="">Edit</a>
-            </td>
-            <td>
-                <a href="">Delete</a>
-            </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td><button type="button">Update</button></td>
+          <td><button type="button">Delete</button></td>
         </tr>
     </table>
-</div>
+    
+    <h2>Add New Order</h2>
+    <form>
+        <label for="order_id">order_id:</label><br>
+        <input type="text" id="order_id" name="order_id"><br>
+        <label for="customer_id">customer_id:</label><br>
+        <input type="text" id="customer_id" name="customer_id"><br>
+        <label for="date">date:</label><br>
+        <input type="text" id="date" name="date"><br>
+        <label for="total_cost">total_cost:</label><br>
+        <input type="text" id="total_cost" name="total_cost"><br>
+        <input type="submit" value="Add">
+    </form>
+    <h2>Search for Order</h2>
+    <form>
+        <label for="date">date:</label><br>
+        <input type="text" id="date" name="date"><br>
+        <label for="total_cost">total_cost:</label><br>
+        <input type="text" id="total_cost" name="total_cost"><br>
+        <input type="submit" value="search">
+    </form>
+</main>
+<br>
+<a href="/">Back to Home Page</a>
 {% endblock %}

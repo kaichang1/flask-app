@@ -23,13 +23,17 @@ def orders():
 def order_details():
     return render_template('order-details.html')
 
-# @app.route('/orders')
-# def root():
-#     return render_template("main.j2", people=people_from_app_py)
+@app.route('/books')
+def books():
+    return render_template("books.html")
 
-# @app.route('/order_details')
-# def root():
-#     return render_template("main.j2", people=people_from_app_py)
+@app.route('/authors')
+def authors():
+    return render_template("authors.html")
+
+@app.route('/publishers')
+def publishers():
+    return render_template('publishers.html')
 
 # Listener
 

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Publishers</title>
+{% endblock %}
+
+{% block body %}
+<div class="nav">
+    <a class="home" href="/">Home</a>
+    <a href="books">Books</a>
+    <a href="authors">Authors</a></li>
+    <a class="active" href="publishers">Publishers</a>
+    <a href="customers">Customers</a>
+    <a href="orders">Orders</a>
+    <a href="order-details">Order Details</a>
+</div>
+
+<header>
+    <h1 class="app-title">Publishers</h1>
+</header>
+<main class="main-content">
+    <table>
+        <tr>
+          <th>publisher_id</th>
+          <th>publisher_name</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>    </td>
+          <td>    </td>
+          <td><button type="button">Update</button></td>
+          <td><button type="button">Delete</button></td>
+        </tr>
+    </table>
+    
+    <h2>Add New Publisher</h2>
+    <form>
+        <label for="publisher_id">publisher_id:</label><br>
+        <input type="text" id="publisher_id" name="publisher_id"><br>
+        <label for="publisher_name">publisher_name:</label><br>
+        <input type="text" id="publisher_name" name="publisher_name"><br>
+        <input type="submit" value="Add">
+    </form>
+    <h2>Search for Publisher</h2>
+    <form>
+        <label for="publisher_name">publisher_name:</label><br>
+        <input type="text" id="publisher_name" name="publisher_name"><br>
+        <input type="submit" value="search">
+    </form>
+</main>
+<br>
+<a href="/">Back to Home Page</a>
+{% endblock %}
