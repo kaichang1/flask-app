@@ -11,15 +11,15 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/customers', methods=['POST', 'GET'])
+@app.route('/customers')
 def customers():
     return render_template('customers.html')
 
-@app.route('/orders', methods=['POST', 'GET'])
+@app.route('/orders')
 def orders():
     return render_template('orders.html')
 
-@app.route('/order-details', methods=['POST', 'GET'])
+@app.route('/order-details')
 def order_details():
     return render_template('order-details.html')
 
@@ -38,7 +38,7 @@ def publishers():
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9111)) 
+    port = int(os.environ.get('PORT', 9114)) 
     #                                 ^^^^
     #              You can replace this number with any valid port
     
