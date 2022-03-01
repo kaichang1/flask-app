@@ -22,17 +22,19 @@
     <table>
         <thead>
             <tr>
-                <th>publisher_id</th>
-                <th>publisher_name</th>
+                {% for key in publishers[0].keys() %}
+                <th>{{ key }}</th>
+                {% endfor %}
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for row in rows %}
+            {% for publisher in publishers %}
             <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
+                {% for key in publisher.keys() %}
+                <td>{{ publisher[key] }}</td>
+                {% endfor %}
                 <td><button type="button">Update</button></td>
                 <td><button type="button">Delete</button></td>
             </tr>

@@ -22,23 +22,19 @@
     <table>
         <thead>
             <tr>
-                <th>order_details_id</th>
-                <th>order_id</th>
-                <th>book_id</th>
-                <th>cost</th>
-                <th>quantity</th>
+                {% for key in order_details[0].keys() %}
+                <th>{{ key }}</th>
+                {% endfor %}
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for row in rows %}
+            {% for order_detail in order_details %}
             <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-                <td>{{ row[4] }}</td>
+                {% for key in order_detail.keys() %}
+                <td>{{ order_detail[key] }}</td>
+                {% endfor %}
                 <td><button type="button">Update</button></td>
                 <td><button type="button">Delete</button></td>
             </tr>
@@ -49,12 +45,20 @@
     <h2>Add New Order Detail</h2>
     <form>
         <label for="order_id">order_id:</label><br>
-        <input type="text" id="order_id" name="order_id"><br>
+        <select name="order_id" id="order_id">
+            {% for order in orders %}
+                {% for key in order.keys() %}
+                <option value="{{ order[key] }}">{{ order[key] }}</option>
+                {% endfor %}
+            {% endfor %}
+        </select><br>
 
         <label for="book_id">book_id:</label><br>
         <select name="book_id" id="book_id">
             {% for book in books %}
-            <option value="{{ book }}">{{ book }}</option>
+                {% for key in book.keys() %}
+                <option value="{{ book[key] }}">{{ book[key] }}</option>
+                {% endfor %}
             {% endfor %}
         </select><br>
 

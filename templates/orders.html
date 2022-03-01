@@ -22,21 +22,19 @@
     <table>
         <thead>
             <tr>
-                <th>order_id</th>
-                <th>customer_id</th>
-                <th>date</th>
-                <th>total_cost</th>
+                {% for key in orders[0].keys() %}
+                <th>{{ key }}</th>
+                {% endfor %}
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for row in rows %}
+            {% for order in orders %}
             <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
+                {% for key in order.keys() %}
+                <td>{{ order[key] }}</td>
+                {% endfor %}
                 <td><button type="button">Update</button></td>
                 <td><button type="button">Delete</button></td>
             </tr>
@@ -49,7 +47,11 @@
         <label for="customer_id">customer_id:</label><br>
         <select name="customer_id" id="customer_id">
             {% for customer in customers %}
-            <option value="{{ customer }}">{{ customer }}</option>
+                {% set full_name = namespace(value='') %}
+                {% for key in customer.keys() %}
+                    {% set full_name.value = full_name.value + ' ' + customer[key] %}
+                {% endfor %}
+                <option value="{{ full_name }}">{{ full_name.value }}</option>
             {% endfor %}
         </select><br>
 

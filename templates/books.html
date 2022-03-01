@@ -22,27 +22,19 @@
     <table>
         <thead>
             <tr>
-                <th>book_id</th>
-                <th>author_id</th>
-                <th>publisher_id</th>
-                <th>title</th>
-                <th>year</th>
-                <th>cost</th>
-                <th>quantity</th>
+                {% for key in books[0].keys() %}
+                <th>{{ key }}</th>
+                {% endfor %}
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for row in rows %}
+            {% for book in books %}
             <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-                <td>{{ row[4] }}</td>
-                <td>{{ row[5] }}</td>
-                <td>{{ row[6] }}</td>
+                {% for key in book.keys() %}
+                <td>{{ book[key] }}</td>
+                {% endfor %}
                 <td><button type="button">Update</button></td>
                 <td><button type="button">Delete</button></td>
             </tr>
@@ -55,17 +47,20 @@
         <label for="author_id">author_id:</label><br>
         <select name="author_id" id="author_id">
             {% for author in authors %}
-            <option value="{{ author[0] }}">{{ author[0] }}</option>
+                {% for key in author.keys() %}
+                <option value="{{ author[key] }}">{{ author[key] }}</option>
+                {% endfor %}
             {% endfor %}
         </select><br>
 
         <label for="publisher_id">publisher_id:</label><br>
         <select name="publisher_id" id="publisher_id">
             {% for publisher in publishers %}
-            <option value="{{ publisher[0] }}">{{ publisher[0] }}</option>
+                {% for key in publisher.keys() %}
+                <option value="{{ publisher[key] }}">{{ publisher[key] }}</option>
+                {% endfor %}
             {% endfor %}
         </select><br>
-
 
         <label for="title">title:</label><br>
         <input type="text" id="title" name="title"><br>

@@ -1,11 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, json, redirect
+from flask_mysqldb import MySQL
 import os
-import database.db_connector as db
-
-# Configuration
 
 app = Flask(__name__)
-db_connection = db.connect_to_database()
+
+app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
+app.config['MYSQL_USER'] = 'cs340_chankaih'
+app.config['MYSQL_PASSWORD'] = '7658' #last 4 of onid
+app.config['MYSQL_DB'] = 'cs340_chankaih'
+app.config['MYSQL_CURSORCLASS'] = "DictCursor"
+
+mysql = MySQL(app)
 
 # Routes 
 
@@ -16,75 +21,84 @@ def index():
 @app.route('/books')
 def books():
     query = "SELECT * FROM Books;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
-
-    print(rows)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    books = cur.fetchall()
 
     query = "SELECT author_name FROM Authors;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    authors = db.execute_query(db_connection, query).fetchall()
-    authors = tuple(sorted(authors))
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    authors = cur.fetchall()
 
     query = "SELECT publisher_name FROM Publishers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    publishers = db.execute_query(db_connection, query).fetchall()
-    publishers = tuple(sorted(publishers))
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    publishers = cur.fetchall()
 
-    return render_template("books.html", rows=rows, authors=authors, publishers=publishers)
+    return render_template("books.html", books=books, authors=authors, publishers=publishers)
 
 @app.route('/authors')
 def authors():
     query = "SELECT * FROM Authors;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
-    return render_template("authors.html", rows=rows)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    authors = cur.fetchall()
+
+    return render_template("authors.html", authors=authors)
 
 @app.route('/publishers')
 def publishers():
     query = "SELECT * FROM Publishers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
-    return render_template('publishers.html', rows=rows)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    publishers = cur.fetchall()
+
+    return render_template('publishers.html', publishers=publishers)
 
 @app.route('/customers')
 def customers():
     query = "SELECT * FROM Customers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
-    return render_template('customers.html', rows=rows)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    customers = cur.fetchall()
+
+    return render_template('customers.html', customers=customers)
 
 @app.route('/orders')
 def orders():
     query = "SELECT * FROM Orders;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    orders = cur.fetchall()
 
     query = "SELECT first_name, last_name FROM Customers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    customers = db.execute_query(db_connection, query).fetchall()
-    customers = tuple(sorted(customers))
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    customers = cur.fetchall()
 
-    return render_template('orders.html', rows=rows, customers=customers)
+    return render_template('orders.html', orders=orders, customers=customers)
 
 @app.route('/order-details')
 def order_details():
     query = "SELECT * FROM Order_details;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    rows = db.execute_query(db_connection, query).fetchall()
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    order_details = cur.fetchall()
+
+    query = "SELECT order_id FROM Orders;"
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    orders = cur.fetchall()
 
     query = "SELECT title FROM Books;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    books = db.execute_query(db_connection, query).fetchall()
-    books = tuple(sorted(books))
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    books = cur.fetchall()
 
-    return render_template('order-details.html', rows=rows, books=books)
+    return render_template('order-details.html', order_details=order_details, orders=orders, books=books)
 
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9115)) 
-    #                                 ^^^^
-    #              You can replace this number with any valid port
-    
-    app.run(port=port, debug=True) 
+    #Start the app on port 3000, it will be different once hosted
+    app.run(port=9115, debug=True)
