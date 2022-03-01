@@ -20,18 +20,24 @@
 </header>
 <main class="main-content">
     <table>
-        <tr>
-          <th>author_id</th>
-          <th>author_name</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>    </td>
-          <td>    </td>
-          <td><button type="button">Update</button></td>
-          <td><button type="button">Delete</button></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>author_id</th>
+                <th>author_name</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td><button type="button">Update</button></td>
+                <td><button type="button">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     
     <h2>Add New Author</h2>

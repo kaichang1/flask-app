@@ -20,32 +20,44 @@
 </header>
 <main class="main-content">
     <table>
-        <tr>
-          <th>order_details_id</th>
-          <th>order_id</th>
-          <th>book_id</th>
-          <th>cost</th>
-          <th>quantity</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td><button type="button">Update</button></td>
-          <td><button type="button">Delete</button></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>order_details_id</th>
+                <th>order_id</th>
+                <th>book_id</th>
+                <th>cost</th>
+                <th>quantity</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td><button type="button">Update</button></td>
+                <td><button type="button">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     
     <h2>Add New Order Detail</h2>
     <form>
         <label for="order_id">order_id:</label><br>
         <input type="text" id="order_id" name="order_id"><br>
+
         <label for="book_id">book_id:</label><br>
-        <input type="text" id="book_id" name="book_id"><br>
+        <select name="book_id" id="book_id">
+            {% for book in books %}
+            <option value="{{ book }}">{{ book }}</option>
+            {% endfor %}
+        </select><br>
+
         <label for="cost">cost:</label><br>
         <input type="text" id="cost" name="cost"><br>
         <label for="quantity">quantity:</label><br>

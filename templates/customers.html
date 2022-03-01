@@ -20,30 +20,36 @@
 </header>
 <main class="main-content">
     <table>
-        <tr>
-          <th>customer_id</th>
-          <th>first_name</th>
-          <th>last_name</th>
-          <th>email</th>
-          <th>phone</th>
-          <th>street</th>
-          <th>city</th>
-          <th>zip</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td><button type="button">Update</button></td>
-          <td><button type="button">Delete</button></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>customer_id</th>
+                <th>first_name</th>
+                <th>last_name</th>
+                <th>email</th>
+                <th>phone</th>
+                <th>street</th>
+                <th>city</th>
+                <th>zip</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td><button type="button">Update</button></td>
+                <td><button type="button">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     
     <h2>Add New Customer</h2>

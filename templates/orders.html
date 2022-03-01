@@ -20,28 +20,39 @@
 </header>
 <main class="main-content">
     <table>
-        <tr>
-          <th>order_id</th>
-          <th>customer_id</th>
-          <th>date</th>
-          <th>total_cost</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td><button type="button">Update</button></td>
-          <td><button type="button">Delete</button></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>order_id</th>
+                <th>customer_id</th>
+                <th>date</th>
+                <th>total_cost</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td><button type="button">Update</button></td>
+                <td><button type="button">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     
     <h2>Add New Order</h2>
     <form>
         <label for="customer_id">customer_id:</label><br>
-        <input type="text" id="customer_id" name="customer_id"><br>
+        <select name="customer_id" id="customer_id">
+            {% for customer in customers %}
+            <option value="{{ customer }}">{{ customer }}</option>
+            {% endfor %}
+        </select><br>
+
         <label for="date">date:</label><br>
         <input type="date" id="date" name="date"><br>
         <label for="total_cost">total_cost:</label><br>
