@@ -44,32 +44,28 @@
     
     <h2>Add New Book</h2>
     <form>
-        <label for="author_id">author_id:</label><br>
+        <label for="author_id">author_name:</label><br>
         <select name="author_id" id="author_id">
             {% for author in authors %}
-                {% for key in author.keys() %}
-                <option value="{{ author[key] }}">{{ author[key] }}</option>
-                {% endfor %}
+                <option value="{{ author.author_id }}">{{ author.author_name }}</option>
             {% endfor %}
         </select><br>
 
-        <label for="publisher_id">publisher_id:</label><br>
+        <label for="publisher_id">publisher_name:</label><br>
         <select name="publisher_id" id="publisher_id">
             {% for publisher in publishers %}
-                {% for key in publisher.keys() %}
-                <option value="{{ publisher[key] }}">{{ publisher[key] }}</option>
-                {% endfor %}
+                <option value="{{ publisher.publisher_id }}">{{ publisher.publisher_name }}</option>
             {% endfor %}
         </select><br>
 
         <label for="title">title:</label><br>
         <input type="text" id="title" name="title"><br>
         <label for="year">year:</label><br>
-        <input type="text" id="year" name="year"><br>
+        <input type="number" min="0" step="1" id="year" name="year"><br>
         <label for="cost">cost:</label><br>
-        <input type="text" id="cost" name="cost"><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
         <label for="quantity">quantity:</label><br>
-        <input type="text" id="quantity" name="quantity"><br>
+        <input type="number" min="0" step="1" id="quantity" name="quantity"><br>
         <input type="submit" value="Add">
     </form>
     <h2>Search for Book</h2>
@@ -77,9 +73,9 @@
         <label for="title">title:</label><br>
         <input type="text" id="title" name="title"><br>
         <label for="year">year:</label><br>
-        <input type="text" id="year" name="year"><br>
+        <input type="number" min="0" step="1" id="year" name="year"><br>
         <label for="cost">cost:</label><br>
-        <input type="text" id="cost" name="cost"><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
         <input type="submit" value="search">
     </form>
 </main>

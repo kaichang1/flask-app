@@ -20,17 +20,22 @@ def index():
 
 @app.route('/books')
 def books():
-    query = "SELECT * FROM Books;"
+    query = """
+    SELECT book_id, author_name, publisher_name, title, year, cost, quantity
+    FROM Books
+    JOIN Authors ON Books.author_id = Authors.author_id
+    JOIN Publishers ON Books.publisher_id = Publishers.publisher_id;
+    """
     cur = mysql.connection.cursor()
     cur.execute(query)
     books = cur.fetchall()
 
-    query = "SELECT author_name FROM Authors;"
+    query = "SELECT author_id, author_name FROM Authors;"
     cur = mysql.connection.cursor()
     cur.execute(query)
     authors = cur.fetchall()
 
-    query = "SELECT publisher_name FROM Publishers;"
+    query = "SELECT publisher_id, publisher_name FROM Publishers;"
     cur = mysql.connection.cursor()
     cur.execute(query)
     publishers = cur.fetchall()
@@ -66,12 +71,16 @@ def customers():
 
 @app.route('/orders')
 def orders():
-    query = "SELECT * FROM Orders;"
+    query = """
+    SELECT order_id, first_name, last_name, email, date, total_cost
+    FROM Orders
+    JOIN Customers ON Orders.customer_id = Customers.customer_id;
+    """
     cur = mysql.connection.cursor()
     cur.execute(query)
     orders = cur.fetchall()
 
-    query = "SELECT first_name, last_name FROM Customers;"
+    query = "SELECT customer_id FROM Customers;"
     cur = mysql.connection.cursor()
     cur.execute(query)
     customers = cur.fetchall()
@@ -80,7 +89,12 @@ def orders():
 
 @app.route('/order-details')
 def order_details():
-    query = "SELECT * FROM Order_details;"
+    query = """
+    SELECT order_details_id, order_id, title, publisher_name, Order_details.cost, Order_details.quantity
+    FROM Order_details
+    JOIN Books ON Order_details.book_id = Books.book_id
+    JOIN Publishers ON Books.publisher_id = Publishers.publisher_id;
+    """
     cur = mysql.connection.cursor()
     cur.execute(query)
     order_details = cur.fetchall()
@@ -90,7 +104,7 @@ def order_details():
     cur.execute(query)
     orders = cur.fetchall()
 
-    query = "SELECT title FROM Books;"
+    query = "SELECT book_id, title FROM Books;"
     cur = mysql.connection.cursor()
     cur.execute(query)
     books = cur.fetchall()

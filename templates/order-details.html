@@ -47,33 +47,29 @@
         <label for="order_id">order_id:</label><br>
         <select name="order_id" id="order_id">
             {% for order in orders %}
-                {% for key in order.keys() %}
-                <option value="{{ order[key] }}">{{ order[key] }}</option>
-                {% endfor %}
+                <option value="{{ order.order_id }}">{{ order.order_id }}</option>
             {% endfor %}
         </select><br>
 
         <label for="book_id">book_id:</label><br>
         <select name="book_id" id="book_id">
             {% for book in books %}
-                {% for key in book.keys() %}
-                <option value="{{ book[key] }}">{{ book[key] }}</option>
-                {% endfor %}
+                <option value="{{ book.book_id }}">{{ book.book_id }}</option>
             {% endfor %}
         </select><br>
 
         <label for="cost">cost:</label><br>
-        <input type="text" id="cost" name="cost"><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
         <label for="quantity">quantity:</label><br>
-        <input type="text" id="quantity" name="quantity"><br>
+        <input type="number" min="0" step="1" id="quantity" name="quantity"><br>
         <input type="submit" value="Add">
     </form>
     <h2>Search for Order Detail</h2>
     <form>
         <label for="cost">cost:</label><br>
-        <input type="text" id="cost" name="cost"><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
         <label for="quantity">quantity:</label><br>
-        <input type="text" id="quantity" name="quantity"><br>
+        <input type="number" min="0" step="1" id="quantity" name="quantity"><br>
         <input type="submit" value="search">
     </form>
 </main>
