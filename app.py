@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, redirect
+from flask import Flask, render_template, redirect, request
 from flask_mysqldb import MySQL
 import os
 
@@ -42,14 +42,26 @@ def books():
 
     return render_template("books.html", books=books, authors=authors, publishers=publishers)
 
-@app.route('/authors')
+@app.route('/authors', methods=["POST", "GET"])
 def authors():
-    query = "SELECT * FROM Authors;"
-    cur = mysql.connection.cursor()
-    cur.execute(query)
-    authors = cur.fetchall()
+    if request.method == "POST":
+        if request.form.get("add_author"):
+            author_name = request.form["author_name"]
 
-    return render_template("authors.html", authors=authors)
+            query = "INSERT INTO Authors (author_name) VALUES (%s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (author_name,))
+            mysql.connection.commit()
+
+        return redirect("/authors")
+        
+    if request.method == "GET":
+        query = "SELECT * FROM Authors;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        authors = cur.fetchall()
+
+        return render_template("authors.html", authors=authors)
 
 @app.route('/publishers')
 def publishers():
