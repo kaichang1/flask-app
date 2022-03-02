@@ -28,34 +28,162 @@ def books():
             cost = request.form["cost"]
             quantity = request.form["quantity"]
 
-            query = "INSERT INTO Books (author_id, publisher_id, title, year, cost, quantity) VALUES (%s, %s, %s, %s, %s, %s)"
-            cur = mysql.connection.cursor()
-            cur.execute(query, (author_id, publisher_id, title, year, cost, quantity))
-            mysql.connection.commit()
+            # If publisher_id, year, and cost are all NULL
+            if publisher_id == "0" and year == "" and cost == "":
+                query = "INSERT INTO Books (author_id, title, quantity) VALUES (%s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, title, quantity))
+                mysql.connection.commit()
+
+            # If only publisher_id, year are NULL
+            elif publisher_id == "0" and year == "":
+                query = "INSERT INTO Books (author_id, title, cost, quantity) VALUES (%s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, title, cost, quantity))
+                mysql.connection.commit()
+
+            # If only publisher_id, cost are NULL
+            elif publisher_id == "0" and cost == "":
+                query = "INSERT INTO Books (author_id, title, year, quantity) VALUES (%s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, title, year, quantity))
+                mysql.connection.commit()
+
+            # If only year, cost are NULL
+            elif year == "" and cost == "":
+                query = "INSERT INTO Books (author_id, publisher_id, title, quantity) VALUES (%s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, publisher_id, title, quantity))
+                mysql.connection.commit()
+
+            # If only publisher_id is NULL
+            elif publisher_id == "0":
+                query = "INSERT INTO Books (author_id, title, year, cost, quantity) VALUES (%s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, title, year, cost, quantity))
+                mysql.connection.commit()
+
+            # If only year is NULL
+            elif year == "":
+                query = "INSERT INTO Books (author_id, publisher_id, title, cost, quantity) VALUES (%s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, publisher_id, title, cost, quantity))
+                mysql.connection.commit()
+
+            # If only cost is NULL
+            elif cost == "":
+                query = "INSERT INTO Books (author_id, publisher_id, title, year, quantity) VALUES (%s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, publisher_id, title, year, quantity))
+                mysql.connection.commit()
+
+            # If no NULL inputs
+            else:
+                query = "INSERT INTO Books (author_id, publisher_id, title, year, cost, quantity) VALUES (%s, %s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (author_id, publisher_id, title, year, cost, quantity))
+                mysql.connection.commit()
 
         return redirect("/books")
 
     if request.method == "GET":
-        query1 = """
-            SELECT book_id, author_name, publisher_name, title, year, cost, quantity
-            FROM Books
-            JOIN Authors ON Books.author_id = Authors.author_id
-            JOIN Publishers ON Books.publisher_id = Publishers.publisher_id
-            ORDER BY book_id;
-            """
-        cur = mysql.connection.cursor()
-        cur.execute(query1)
-        books = cur.fetchall()
+        if request.args.get("search_book"):
+            title = request.args["title"]
+            author = request.args["author"]
 
-        query2 = "SELECT author_id, author_name FROM Authors;"
-        cur = mysql.connection.cursor()
-        cur.execute(query2)
-        authors = cur.fetchall()
+            # If title is NULL
+            if title == "":
+                query1 = """
+                    SELECT book_id, author_name, publisher_name, title, year, cost, quantity
+                    FROM Books
+                    JOIN Authors ON Books.author_id = Authors.author_id
+                    LEFT JOIN Publishers ON Books.publisher_id = Publishers.publisher_id
+                    WHERE author_name = (%s)
+                    ORDER BY book_id;
+                    """
+                cur = mysql.connection.cursor()
+                cur.execute(query1, (author,))
+                books = cur.fetchall()
 
-        query3 = "SELECT publisher_id, publisher_name FROM Publishers;"
-        cur = mysql.connection.cursor()
-        cur.execute(query3)
-        publishers = cur.fetchall()
+                query2 = "SELECT author_id, author_name FROM Authors;"
+                cur = mysql.connection.cursor()
+                cur.execute(query2)
+                authors = cur.fetchall()
+
+                query3 = "SELECT publisher_id, publisher_name FROM Publishers;"
+                cur = mysql.connection.cursor()
+                cur.execute(query3)
+                publishers = cur.fetchall()
+
+            # If author is NULL
+            elif author == "":
+                query1 = """
+                    SELECT book_id, author_name, publisher_name, title, year, cost, quantity
+                    FROM Books
+                    JOIN Authors ON Books.author_id = Authors.author_id
+                    LEFT JOIN Publishers ON Books.publisher_id = Publishers.publisher_id
+                    WHERE title = (%s)
+                    ORDER BY book_id;
+                    """
+                cur = mysql.connection.cursor()
+                cur.execute(query1, (title,))
+                books = cur.fetchall()
+
+                query2 = "SELECT author_id, author_name FROM Authors;"
+                cur = mysql.connection.cursor()
+                cur.execute(query2)
+                authors = cur.fetchall()
+
+                query3 = "SELECT publisher_id, publisher_name FROM Publishers;"
+                cur = mysql.connection.cursor()
+                cur.execute(query3)
+                publishers = cur.fetchall()
+
+            # If no NULL inputs
+            else:
+                query1 = """
+                    SELECT book_id, author_name, publisher_name, title, year, cost, quantity
+                    FROM Books
+                    JOIN Authors ON Books.author_id = Authors.author_id
+                    LEFT JOIN Publishers ON Books.publisher_id = Publishers.publisher_id
+                    WHERE title = (%s) AND author_name = (%s)
+                    ORDER BY book_id;
+                    """
+                cur = mysql.connection.cursor()
+                cur.execute(query1, (title, author))
+                books = cur.fetchall()
+
+                query2 = "SELECT author_id, author_name FROM Authors;"
+                cur = mysql.connection.cursor()
+                cur.execute(query2)
+                authors = cur.fetchall()
+
+                query3 = "SELECT publisher_id, publisher_name FROM Publishers;"
+                cur = mysql.connection.cursor()
+                cur.execute(query3)
+                publishers = cur.fetchall()
+
+        else:
+            query1 = """
+                SELECT book_id, author_name, publisher_name, title, year, cost, quantity
+                FROM Books
+                JOIN Authors ON Books.author_id = Authors.author_id
+                LEFT JOIN Publishers ON Books.publisher_id = Publishers.publisher_id
+                ORDER BY book_id;
+                """
+            cur = mysql.connection.cursor()
+            cur.execute(query1)
+            books = cur.fetchall()
+
+            query2 = "SELECT author_id, author_name FROM Authors;"
+            cur = mysql.connection.cursor()
+            cur.execute(query2)
+            authors = cur.fetchall()
+
+            query3 = "SELECT publisher_id, publisher_name FROM Publishers;"
+            cur = mysql.connection.cursor()
+            cur.execute(query3)
+            publishers = cur.fetchall()
 
         return render_template("books.html", books=books, authors=authors, publishers=publishers)
 
@@ -65,7 +193,7 @@ def authors():
         if request.form.get("add_author"):
             author_name = request.form["author_name"]
 
-            query = "INSERT INTO Authors (author_name) VALUES (%s)"
+            query = "INSERT INTO Authors (author_name) VALUES (%s);"
             cur = mysql.connection.cursor()
             cur.execute(query, (author_name,))
             mysql.connection.commit()
@@ -73,10 +201,19 @@ def authors():
         return redirect("/authors")
         
     if request.method == "GET":
-        query = "SELECT * FROM Authors;"
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        authors = cur.fetchall()
+        if request.args.get("search_author"):
+            author_name = request.args["author_name"]
+
+            query = "SELECT * FROM Authors WHERE author_name = (%s);"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (author_name,))
+            authors = cur.fetchall()
+
+        else:
+            query = "SELECT * FROM Authors;"
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            authors = cur.fetchall()
 
         return render_template("authors.html", authors=authors)
 
@@ -86,7 +223,7 @@ def publishers():
         if request.form.get("add_publisher"):
             publisher_name = request.form["publisher_name"]
 
-            query = "INSERT INTO Publishers (publisher_name) VALUES (%s)"
+            query = "INSERT INTO Publishers (publisher_name) VALUES (%s);"
             cur = mysql.connection.cursor()
             cur.execute(query, (publisher_name,))
             mysql.connection.commit()
@@ -94,10 +231,19 @@ def publishers():
         return redirect("/publishers")
         
     if request.method == "GET":
-        query = "SELECT * FROM Publishers;"
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        publishers = cur.fetchall()
+        if request.args.get("search_publisher"):
+            publisher_name = request.args["publisher_name"]
+
+            query = "SELECT * FROM Publishers WHERE publisher_name = (%s);"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (publisher_name,))
+            publishers = cur.fetchall()
+
+        else:
+            query = "SELECT * FROM Publishers;"
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            publishers = cur.fetchall()
 
         return render_template('publishers.html', publishers=publishers)
 
@@ -113,10 +259,19 @@ def customers():
             city = request.form["city"]
             zip = request.form["zip"]
 
-            query = "INSERT INTO Customers (first_name, last_name, email, phone, street, city, zip) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cur = mysql.connection.cursor()
-            cur.execute(query, (first_name, last_name, email, phone, street, city, zip))
-            mysql.connection.commit()
+            # If phone is NULL
+            if phone == "":
+                query = "INSERT INTO Customers (first_name, last_name, email, street, city, zip) VALUES (%s, %s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (first_name, last_name, email, street, city, zip))
+                mysql.connection.commit()
+
+            # If no NULL inputs
+            else:
+                query = "INSERT INTO Customers (first_name, last_name, email, phone, street, city, zip) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (first_name, last_name, email, phone, street, city, zip))
+                mysql.connection.commit()
 
         return redirect("/customers")
     if request.method == "GET":
@@ -135,7 +290,7 @@ def orders():
             date = request.form["date"]
             total_cost = request.form["total_cost"]
             
-            query = "INSERT INTO Orders (customer_id, date, total_cost) VALUES (%s, %s, %s)"
+            query = "INSERT INTO Orders (customer_id, date, total_cost) VALUES (%s, %s, %s);"
             cur = mysql.connection.cursor()
             cur.execute(query, (customer_id, date, total_cost))
             mysql.connection.commit()
@@ -169,7 +324,7 @@ def order_details():
             cost = request.form["cost"]
             quantity = request.form["quantity"]
 
-            query = "INSERT INTO Order_details (order_id, book_id, cost, quantity) VALUES (%s, %s, %s, %s)"
+            query = "INSERT INTO Order_details (order_id, book_id, cost, quantity) VALUES (%s, %s, %s, %s);"
             cur = mysql.connection.cursor()
             cur.execute(query, (order_id, book_id, cost, quantity))
             mysql.connection.commit()

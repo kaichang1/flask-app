@@ -45,32 +45,20 @@
     <h2>Add New Customer</h2>
     <form id="add_customer" action="/customers" method="POST">
         <label for="first_name">first_name:</label><br>
-        <input type="text" id="first_name" name="first_name"><br>
+        <input type="text" id="first_name" name="first_name" required><br>
         <label for="last_name">last_name:</label><br>
-        <input type="text" id="last_name" name="last_name"><br>
+        <input type="text" id="last_name" name="last_name" required><br>
         <label for="email">email:</label><br>
-        <input type="text" id="email" name="email"><br>
+        <input type="text" id="email" name="email" required><br>
         <label for="phone">phone:</label><br>
         <input type="text" id="phone" name="phone"><br>
         <label for="street">street:</label><br>
-        <input type="text" id="street" name="street"><br>
+        <input type="text" id="street" name="street" required><br>
         <label for="city">city:</label><br>
-        <input type="text" id="city" name="city"><br>
+        <input type="text" id="city" name="city" required><br>
         <label for="zip">zip:</label><br>
-        <input type="number" min="0" step="1" id="zip" name="zip"><br>
+        <input type="number" min="0" step="1" id="zip" name="zip" required><br>
         <input type="submit" value="Add" name="add_customer">
-    </form>
-    <h2>Search for Customer</h2>
-    <form>
-        <label for="first_name">first_name:</label><br>
-        <input type="text" id="first_name" name="first_name"><br>
-        <label for="last_name">last_name:</label><br>
-        <input type="text" id="last_name" name="last_name"><br>
-        <label for="email">email:</label><br>
-        <input type="text" id="email" name="email"><br>
-        <label for="phone">phone:</label><br>
-        <input type="text" id="phone" name="phone"><br>
-        <input type="submit" value="search">
     </form>
 </main>
 <br>

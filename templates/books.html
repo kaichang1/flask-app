@@ -53,30 +53,29 @@
 
         <label for="publisher_id">publisher_name:</label><br>
         <select name="publisher_id" id="publisher_id">
+            <option value="0">NULL</option>
             {% for publisher in publishers %}
                 <option value="{{ publisher.publisher_id }}">{{ publisher.publisher_name }}</option>
             {% endfor %}
         </select><br>
 
         <label for="title">title:</label><br>
-        <input type="text" id="title" name="title"><br>
+        <input type="text" id="title" name="title" required><br>
         <label for="year">year:</label><br>
         <input type="number" min="0" step="1" id="year" name="year"><br>
         <label for="cost">cost:</label><br>
         <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
         <label for="quantity">quantity:</label><br>
-        <input type="number" min="0" step="1" id="quantity" name="quantity"><br>
+        <input type="number" min="0" step="1" id="quantity" name="quantity" required><br>
         <input type="submit" value="Add" name="add_book">
     </form>
     <h2>Search for Book</h2>
-    <form>
+    <form id="search_book" action="/books">
         <label for="title">title:</label><br>
         <input type="text" id="title" name="title"><br>
-        <label for="year">year:</label><br>
-        <input type="number" min="0" step="1" id="year" name="year"><br>
-        <label for="cost">cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
-        <input type="submit" value="search">
+        <label for="author">author:</label><br>
+        <input type="text" id="author" name="author"><br>
+        <input type="submit" value="Search" name="search_book">
     </form>
 </main>
 <br>
