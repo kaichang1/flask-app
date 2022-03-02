@@ -43,7 +43,7 @@
     </table>
     
     <h2>Add New Order</h2>
-    <form>
+    <form id="add_order" action="/orders" method="POST">
         <label for="customer_id">customer_id:</label><br>
         <select name="customer_id" id="customer_id">
             {% for customer in customers %}
@@ -55,7 +55,7 @@
         <input type="date" id="date" name="date"><br>
         <label for="total_cost">total_cost:</label><br>
         <input type="number" min="0.00" step="0.01" id="total_cost" name="total_cost"><br>
-        <input type="submit" value="Add">
+        <input type="submit" value="Add" name="add_order">
     </form>
     <h2>Search for Order</h2>
     <form>

@@ -43,7 +43,7 @@
     </table>
     
     <h2>Add New Customer</h2>
-    <form>
+    <form id="add_customer" action="/customers" method="POST">
         <label for="first_name">first_name:</label><br>
         <input type="text" id="first_name" name="first_name"><br>
         <label for="last_name">last_name:</label><br>
@@ -58,7 +58,7 @@
         <input type="text" id="city" name="city"><br>
         <label for="zip">zip:</label><br>
         <input type="number" min="0" step="1" id="zip" name="zip"><br>
-        <input type="submit" value="Add">
+        <input type="submit" value="Add" name="add_customer">
     </form>
     <h2>Search for Customer</h2>
     <form>
