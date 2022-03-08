@@ -7,18 +7,34 @@
 {% block body %}
 <div class="nav">
     <a class="home" href="/">Home</a>
-    <a href="books">Books</a>
-    <a href="authors">Authors</a></li>
-    <a href="publishers">Publishers</a>
-    <a href="customers">Customers</a>
-    <a class="active" href="orders">Orders</a>
-    <a href="order-details">Order Details</a>
+    <a href="/books">Books</a>
+    <a href="/authors">Authors</a></li>
+    <a href="/publishers">Publishers</a>
+    <a href="/customers">Customers</a>
+    <a class="active" href="/orders">Orders</a>
+    <a href="/order-details">Order Details</a>
 </div>
 
 <header>
     <h1 class="app-title">Orders</h1>
 </header>
 <main class="main-content">
+    <h2>Add New Order</h2>
+    <form id="add_order" action="/orders" method="POST">
+        <label for="customer_id">customer_id:</label><br>
+        <select name="customer_id" id="customer_id">
+            {% for customer in customers %}
+                <option value="{{ customer.customer_id }}">{{ customer.customer_id }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="date">date:</label><br>
+        <input type="date" id="date" name="date" required><br>
+        <label for="total_cost">total_cost:</label><br>
+        <input type="number" min="0.00" step="0.01" id="total_cost" name="total_cost" required><br>
+        <input type="submit" value="Add" name="add_order">
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -41,23 +57,7 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <h2>Add New Order</h2>
-    <form id="add_order" action="/orders" method="POST">
-        <label for="customer_id">customer_id:</label><br>
-        <select name="customer_id" id="customer_id">
-            {% for customer in customers %}
-                <option value="{{ customer.customer_id }}">{{ customer.customer_id }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label for="date">date:</label><br>
-        <input type="date" id="date" name="date" required><br>
-        <label for="total_cost">total_cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="total_cost" name="total_cost" required><br>
-        <input type="submit" value="Add" name="add_order">
-    </form>
 </main>
 <br>
-<a href="/">Back to Home Page</a>
+<a href="#">Back to Top</a>
 {% endblock %}

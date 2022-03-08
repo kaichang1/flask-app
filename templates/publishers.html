@@ -7,18 +7,31 @@
 {% block body %}
 <div class="nav">
     <a class="home" href="/">Home</a>
-    <a href="books">Books</a>
-    <a href="authors">Authors</a></li>
-    <a class="active" href="publishers">Publishers</a>
-    <a href="customers">Customers</a>
-    <a href="orders">Orders</a>
-    <a href="order-details">Order Details</a>
+    <a href="/books">Books</a>
+    <a href="/authors">Authors</a></li>
+    <a class="active" href="/publishers">Publishers</a>
+    <a href="/customers">Customers</a>
+    <a href="/orders">Orders</a>
+    <a href="/order-details">Order Details</a>
 </div>
 
 <header>
     <h1 class="app-title">Publishers</h1>
 </header>
 <main class="main-content">
+    <h2>Add New Publisher</h2>
+    <form id="add_publisher" action="/publishers" method="POST">
+        <label for="publisher_name">publisher_name:</label><br>
+        <input type="text" id="publisher_name" name="publisher_name" required><br>
+        <input type="submit" value="Add" name="add_publisher">
+    </form>
+    <h2>Search for Publisher</h2>
+    <form  id="search_publisher" action="/publishers">
+        <label for="publisher_name">publisher_name:</label><br>
+        <input type="text" id="publisher_name" name="publisher_name"><br>
+        <input type="submit" value="Search" name="search_publisher">
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -41,20 +54,7 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <h2>Add New Publisher</h2>
-    <form id="add_publisher" action="/publishers" method="POST">
-        <label for="publisher_name">publisher_name:</label><br>
-        <input type="text" id="publisher_name" name="publisher_name" required><br>
-        <input type="submit" value="Add" name="add_publisher">
-    </form>
-    <h2>Search for Publisher</h2>
-    <form  id="search_publisher" action="/publishers">
-        <label for="publisher_name">publisher_name:</label><br>
-        <input type="text" id="publisher_name" name="publisher_name"><br>
-        <input type="submit" value="Search" name="search_publisher">
-    </form>
 </main>
 <br>
-<a href="/">Back to Home Page</a>
+<a href="#">Back to Top</a>
 {% endblock %}

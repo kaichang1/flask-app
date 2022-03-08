@@ -7,18 +7,41 @@
 {% block body %}
 <div class="nav">
     <a class="home" href="/">Home</a>
-    <a href="books">Books</a>
-    <a href="authors">Authors</a></li>
-    <a href="publishers">Publishers</a>
-    <a href="customers">Customers</a>
-    <a href="orders">Orders</a>
-    <a class="active" href="order-details">Order Details</a>
+    <a href="/books">Books</a>
+    <a href="/authors">Authors</a></li>
+    <a href="/publishers">Publishers</a>
+    <a href="/customers">Customers</a>
+    <a href="/orders">Orders</a>
+    <a class="active" href="/order-details">Order Details</a>
 </div>
 
 <header>
     <h1 class="app-title">Order_details</h1>
 </header>
 <main class="main-content">
+    <h2>Add New Order Detail</h2>
+    <form id="add_order_detail" action="/order-details" method="POST">
+        <label for="order_id">order_id:</label><br>
+        <select name="order_id" id="order_id">
+            {% for order in orders %}
+                <option value="{{ order.order_id }}">{{ order.order_id }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="book_id">book_id:</label><br>
+        <select name="book_id" id="book_id">
+            {% for book in books %}
+                <option value="{{ book.book_id }}">{{ book.book_id }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="cost">cost:</label><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost" required><br>
+        <label for="quantity">quantity:</label><br>
+        <input type="number" min="1" step="1" id="quantity" name="quantity" required><br>
+        <input type="submit" value="Add" name="add_order_detail">
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -41,30 +64,7 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <h2>Add New Order Detail</h2>
-    <form id="add_order_detail" action="/order-details" method="POST">
-        <label for="order_id">order_id:</label><br>
-        <select name="order_id" id="order_id">
-            {% for order in orders %}
-                <option value="{{ order.order_id }}">{{ order.order_id }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label for="book_id">book_id:</label><br>
-        <select name="book_id" id="book_id">
-            {% for book in books %}
-                <option value="{{ book.book_id }}">{{ book.book_id }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label for="cost">cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="cost" name="cost" required><br>
-        <label for="quantity">quantity:</label><br>
-        <input type="number" min="0" step="1" id="quantity" name="quantity" required><br>
-        <input type="submit" value="Add" name="add_order_detail">
-    </form>
 </main>
 <br>
-<a href="/">Back to Home Page</a>
+<a href="#">Back to Top</a>
 {% endblock %}

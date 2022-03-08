@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Books</title>
+<title>Update Books</title>
 {% endblock %}
 
 {% block body %}
@@ -16,15 +16,19 @@
 </div>
 
 <header>
-    <h1 class="app-title">Books</h1>
+    <h1 class="app-title">Update Books</h1>
 </header>
 <main class="main-content">
-    <h2>Add New Book</h2>
-    <form id="add_book" action="/books" method="POST">
+    <h2>Update Book</h2>
+    <form id="update_book" action="/update_books/{{ books[0]['book_id'] }}" method="POST">
         <label for="author_id">author_name:</label><br>
         <select name="author_id" id="author_id">
             {% for author in authors %}
-                <option value="{{ author.author_id }}">{{ author.author_name }}</option>
+                {% if author.author_name == books[0].author_name %}
+                    <option selected value="{{ author.author_id }}">{{ author.author_name }}</option>
+                {% else %}
+                    <option value="{{ author.author_id }}">{{ author.author_name }}</option>
+                {% endif %}
             {% endfor %}
         </select><br>
 
@@ -32,27 +36,23 @@
         <select name="publisher_id" id="publisher_id">
             <option value="0">NULL</option>
             {% for publisher in publishers %}
-                <option value="{{ publisher.publisher_id }}">{{ publisher.publisher_name }}</option>
+                {% if publisher.publisher_name == books[0].publisher_name %}
+                    <option selected value="{{ publisher.publisher_id }}">{{ publisher.publisher_name }}</option>
+                {% else %}
+                    <option value="{{ publisher.publisher_id }}">{{ publisher.publisher_name }}</option>
+                {% endif %}
             {% endfor %}
         </select><br>
 
         <label for="title">title:</label><br>
-        <input type="text" id="title" name="title" required><br>
+        <input type="text" id="title" name="title" value="{{ books[0]['title'] }}" required><br>
         <label for="year">year:</label><br>
-        <input type="number" min="0" step="1" id="year" name="year"><br>
+        <input type="number" min="0" step="1" id="year" name="year" value="{{ books[0]['year'] }}"><br>
         <label for="cost">cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="cost" name="cost"><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost" value="{{ books[0]['cost'] }}"><br>
         <label for="quantity">quantity:</label><br>
-        <input type="number" min="0" step="1" id="quantity" name="quantity" required><br>
-        <input type="submit" value="Add" name="add_book">
-    </form>
-    <h2>Search for Book</h2>
-    <form id="search_book" action="/books">
-        <label for="title">title:</label><br>
-        <input type="text" id="title" name="title"><br>
-        <label for="author">author:</label><br>
-        <input type="text" id="author" name="author"><br>
-        <input type="submit" value="Search" name="search_book">
+        <input type="number" min="0" step="1" id="quantity" name="quantity" value="{{ books[0]['quantity'] }}" required><br>
+        <input type="submit" value="Update" name="update_book">
     </form>
 
     <table>
@@ -62,7 +62,6 @@
                 <th>{{ key }}</th>
                 {% endfor %}
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -71,11 +70,6 @@
                 {% for key in book.keys() %}
                 <td>{{ book[key] }}</td>
                 {% endfor %}
-                <td>
-                    <form action="/update_books/{{ book['book_id'] }}">
-                        <input type="submit" value="Update" />
-                    </form>
-                </td>
                 <td>
                     <form action="/delete_books/{{ book['book_id'] }}">
                         <input type="submit" value="Delete" />

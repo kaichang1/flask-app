@@ -7,18 +7,37 @@
 {% block body %}
 <div class="nav">
     <a class="home" href="/">Home</a>
-    <a href="books">Books</a>
-    <a href="authors">Authors</a></li>
-    <a href="publishers">Publishers</a>
-    <a class="active" href="customers">Customers</a>
-    <a href="orders">Orders</a>
-    <a href="order-details">Order Details</a>
+    <a href="/books">Books</a>
+    <a href="/authors">Authors</a></li>
+    <a href="/publishers">Publishers</a>
+    <a class="active" href="/customers">Customers</a>
+    <a href="/orders">Orders</a>
+    <a href="/order-details">Order Details</a>
 </div>
 
 <header>
     <h1 class="app-title">Customers</h1>
 </header>
 <main class="main-content">
+    <h2>Add New Customer</h2>
+    <form id="add_customer" action="/customers" method="POST">
+        <label for="first_name">first_name:</label><br>
+        <input type="text" id="first_name" name="first_name" required><br>
+        <label for="last_name">last_name:</label><br>
+        <input type="text" id="last_name" name="last_name" required><br>
+        <label for="email">email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone">phone:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><br>
+        <label for="street">street:</label><br>
+        <input type="text" id="street" name="street" required><br>
+        <label for="city">city:</label><br>
+        <input type="text" id="city" name="city" required><br>
+        <label for="zip">zip:</label><br>
+        <input type="number" min="0" step="1" id="zip" name="zip" required><br>
+        <input type="submit" value="Add" name="add_customer">
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -41,26 +60,7 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <h2>Add New Customer</h2>
-    <form id="add_customer" action="/customers" method="POST">
-        <label for="first_name">first_name:</label><br>
-        <input type="text" id="first_name" name="first_name" required><br>
-        <label for="last_name">last_name:</label><br>
-        <input type="text" id="last_name" name="last_name" required><br>
-        <label for="email">email:</label><br>
-        <input type="text" id="email" name="email" required><br>
-        <label for="phone">phone:</label><br>
-        <input type="text" id="phone" name="phone"><br>
-        <label for="street">street:</label><br>
-        <input type="text" id="street" name="street" required><br>
-        <label for="city">city:</label><br>
-        <input type="text" id="city" name="city" required><br>
-        <label for="zip">zip:</label><br>
-        <input type="number" min="0" step="1" id="zip" name="zip" required><br>
-        <input type="submit" value="Add" name="add_customer">
-    </form>
 </main>
 <br>
-<a href="/">Back to Home Page</a>
+<a href="#">Back to Top</a>
 {% endblock %}
