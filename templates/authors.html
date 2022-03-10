@@ -20,6 +20,15 @@
 </header>
 <main class="main-content">
     <h2>Add New Author</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     <form id="add_author" action="/authors" method="POST">
         <label for="author_name">author_name:</label><br>
         <input type="text" id="author_name" name="author_name" required><br>
@@ -49,12 +58,12 @@
                 <td>{{ author[key] }}</td>
                 {% endfor %}
                 <td>
-                    <form action="/update_authors/{{ author['author_id'] }}">
+                    <form action="/update-authors/{{ author['author_id'] }}">
                         <input type="submit" value="Update" />
                     </form>
                 </td>
                 <td>
-                    <form action="/delete_authors/{{ author['author_id'] }}">
+                    <form action="/delete-authors/{{ author['author_id'] }}">
                         <input type="submit" value="Delete" />
                     </form>
                 </td>

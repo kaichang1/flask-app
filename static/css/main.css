@@ -56,3 +56,7 @@ td {
 header, main {
     margin: 0.5rem;
 }
+
+.flashes {
+    color: red;
+}

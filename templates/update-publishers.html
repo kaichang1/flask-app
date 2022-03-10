@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Publishers</title>
+<title>Update Publishers</title>
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,10 @@
 </div>
 
 <header>
-    <h1 class="app-title">Publishers</h1>
+    <h1 class="app-title">Update Publishers</h1>
 </header>
 <main class="main-content">
-    <h2>Add New Publisher</h2>
+    <h2>Update Publisher</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=flashes>
@@ -29,16 +29,10 @@
             </div>
         {% endif %}
     {% endwith %}
-    <form id="add_publisher" action="/publishers" method="POST">
+    <form id="update_publishers" action="/update-publishers/{{ publishers[0]['publisher_id'] }}" method="POST">
         <label for="publisher_name">publisher_name:</label><br>
-        <input type="text" id="publisher_name" name="publisher_name" required><br>
-        <input type="submit" value="Add" name="add_publisher">
-    </form>
-    <h2>Search for Publisher</h2>
-    <form  id="search_publisher" action="/publishers">
-        <label for="publisher_name">publisher_name:</label><br>
-        <input type="text" id="publisher_name" name="publisher_name"><br>
-        <input type="submit" value="Search" name="search_publisher">
+        <input type="text" id="publisher_name" name="publisher_name" value="{{ publishers[0]['publisher_name'] }}" required><br>
+        <input type="submit" value="Update" name="update_publisher">
     </form>
 
     <table>
@@ -48,7 +42,6 @@
                 <th>{{ key }}</th>
                 {% endfor %}
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -57,11 +50,6 @@
                 {% for key in publisher.keys() %}
                 <td>{{ publisher[key] }}</td>
                 {% endfor %}
-                <td>
-                    <form action="/update-publishers/{{ publisher['publisher_id'] }}">
-                        <input type="submit" value="Update" />
-                    </form>
-                </td>
                 <td>
                     <form action="/delete-publishers/{{ publisher['publisher_id'] }}">
                         <input type="submit" value="Delete" />

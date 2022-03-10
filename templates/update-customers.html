@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Customers</title>
+<title>Update Customers</title>
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,10 @@
 </div>
 
 <header>
-    <h1 class="app-title">Customers</h1>
+    <h1 class="app-title">Update Customers</h1>
 </header>
 <main class="main-content">
-    <h2>Add New Customer</h2>
+    <h2>Update Customer</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=flashes>
@@ -29,22 +29,26 @@
             </div>
         {% endif %}
     {% endwith %}
-    <form id="add_customer" action="/customers" method="POST">
+    <form id="update_customer" action="/update-customers/{{ customers[0]['customer_id'] }}" method="POST">
         <label for="first_name">first_name:</label><br>
-        <input type="text" id="first_name" name="first_name" required><br>
+        <input type="text" id="first_name" name="first_name" value="{{ customers[0]['first_name'] }}" required><br>
         <label for="last_name">last_name:</label><br>
-        <input type="text" id="last_name" name="last_name" required><br>
+        <input type="text" id="last_name" name="last_name" value="{{ customers[0]['last_name'] }}" required><br>
         <label for="email">email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" value="{{ customers[0]['email'] }}" required><br>
         <label for="phone">phone:</label><br>
-        <input type="tel" id="phone" name="phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><br>
+        {% if customers[0]['phone'] is none %}
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><br>
+        {% else %}
+            <input type="tel" id="phone" name="phone" value="{{ customers[0]['phone'] }}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><br>
+        {% endif %}
         <label for="street">street:</label><br>
-        <input type="text" id="street" name="street" required><br>
+        <input type="text" id="street" name="street" value="{{ customers[0]['street'] }}" required><br>
         <label for="city">city:</label><br>
-        <input type="text" id="city" name="city" required><br>
+        <input type="text" id="city" name="city" value="{{ customers[0]['city'] }}" required><br>
         <label for="zip">zip:</label><br>
-        <input type="number" min="0" step="1" id="zip" name="zip" required><br>
-        <input type="submit" value="Add" name="add_customer">
+        <input type="number" min="0" step="1" id="zip" name="zip" value="{{ customers[0]['zip'] }}" required><br>
+        <input type="submit" value="Update" name="update_customer">
     </form>
 
     <table>
@@ -54,7 +58,6 @@
                 <th>{{ key }}</th>
                 {% endfor %}
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -63,11 +66,6 @@
                 {% for key in customer.keys() %}
                 <td>{{ customer[key] }}</td>
                 {% endfor %}
-                <td>
-                    <form action="/update-customers/{{ customer['customer_id'] }}">
-                        <input type="submit" value="Update" />
-                    </form>
-                </td>
                 <td>
                     <form action="/delete-customers/{{ customer['customer_id'] }}">
                         <input type="submit" value="Delete" />

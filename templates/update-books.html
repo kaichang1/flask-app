@@ -20,7 +20,16 @@
 </header>
 <main class="main-content">
     <h2>Update Book</h2>
-    <form id="update_book" action="/update_books/{{ books[0]['book_id'] }}" method="POST">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <form id="update_book" action="/update-books/{{ books[0]['book_id'] }}" method="POST">
         <label for="author_id">author_name:</label><br>
         <select name="author_id" id="author_id">
             {% for author in authors %}
@@ -71,7 +80,7 @@
                 <td>{{ book[key] }}</td>
                 {% endfor %}
                 <td>
-                    <form action="/delete_books/{{ book['book_id'] }}">
+                    <form action="/delete-books/{{ book['book_id'] }}">
                         <input type="submit" value="Delete" />
                     </form>
                 </td>

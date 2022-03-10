@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Orders</title>
+<title>Update Orders</title>
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,10 @@
 </div>
 
 <header>
-    <h1 class="app-title">Orders</h1>
+    <h1 class="app-title">Update Orders</h1>
 </header>
 <main class="main-content">
-    <h2>Add New Order</h2>
+    <h2>Update Order</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=flashes>
@@ -29,19 +29,23 @@
             </div>
         {% endif %}
     {% endwith %}
-    <form id="add_order" action="/orders" method="POST">
+    <form id="update_order" action="/update-orders/{{ orders[0]['order_id'] }}" method="POST">
         <label for="customer_id">customer_id:</label><br>
         <select name="customer_id" id="customer_id">
             {% for customer in customers %}
-                <option value="{{ customer.customer_id }}">{{ customer.customer_id }}</option>
+                {% if customer.email == orders[0].email %}
+                    <option selected value="{{ customer.customer_id }}">{{ customer.customer_id }}</option>
+                {% else %}
+                    <option value="{{ customer.customer_id }}">{{ customer.customer_id }}</option>
+                {% endif %}
             {% endfor %}
         </select><br>
 
         <label for="date">date:</label><br>
-        <input type="date" id="date" name="date" required><br>
+        <input type="date" id="date" name="date" value="{{ orders[0]['date'] }}" required><br>
         <label for="total_cost">total_cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="total_cost" name="total_cost" required><br>
-        <input type="submit" value="Add" name="add_order">
+        <input type="number" min="0.00" step="0.01" id="total_cost" name="total_cost" value="{{ orders[0]['total_cost'] }}" required><br>
+        <input type="submit" value="Update" name="update_order">
     </form>
 
     <table>
@@ -51,7 +55,6 @@
                 <th>{{ key }}</th>
                 {% endfor %}
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -60,11 +63,6 @@
                 {% for key in order.keys() %}
                 <td>{{ order[key] }}</td>
                 {% endfor %}
-                <td>
-                    <form action="/update-orders/{{ order['order_id'] }}">
-                        <input type="submit" value="Update" />
-                    </form>
-                </td>
                 <td>
                     <form action="/delete-orders/{{ order['order_id'] }}">
                         <input type="submit" value="Delete" />

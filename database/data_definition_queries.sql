@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 01, 2022 at 08:13 PM
+-- Generation Time: Mar 07, 2022 at 11:48 PM
 -- Server version: 10.6.5-MariaDB-log
 -- PHP Version: 7.4.28
 
@@ -38,13 +38,13 @@ CREATE TABLE `Authors` (
 --
 
 INSERT INTO `Authors` (`author_id`, `author_name`) VALUES
-(1, 'J. K. Rowling'),
-(2, 'John Steinbeck'),
-(3, 'William Shakespeare'),
+(7, 'Geoffrey Chaucer'),
 (4, 'Homer'),
-(5, 'Lewis Carroll'),
+(1, 'J. K. Rowling'),
 (6, 'Jane Austen'),
-(7, 'Geoffrey Chaucer');
+(2, 'John Steinbeck'),
+(5, 'Lewis Carroll'),
+(3, 'William Shakespeare');
 
 -- --------------------------------------------------------
 
@@ -186,10 +186,10 @@ CREATE TABLE `Publishers` (
 --
 
 INSERT INTO `Publishers` (`publisher_id`, `publisher_name`) VALUES
-(1, 'Scholastic, Inc.'),
 (2, 'Penguin Publishing Group'),
-(3, 'Simon & Schuster'),
-(4, 'Penguin Young Readers Group');
+(4, 'Penguin Young Readers Group'),
+(1, 'Scholastic, Inc.'),
+(3, 'Simon & Schuster');
 
 --
 -- Indexes for dumped tables
@@ -199,13 +199,15 @@ INSERT INTO `Publishers` (`publisher_id`, `publisher_name`) VALUES
 -- Indexes for table `Authors`
 --
 ALTER TABLE `Authors`
-  ADD PRIMARY KEY (`author_id`);
+  ADD PRIMARY KEY (`author_id`),
+  ADD UNIQUE KEY `author_name` (`author_name`);
 
 --
 -- Indexes for table `Books`
 --
 ALTER TABLE `Books`
   ADD PRIMARY KEY (`book_id`),
+  ADD UNIQUE KEY `author_id_2` (`author_id`,`publisher_id`,`title`),
   ADD KEY `author_id` (`author_id`),
   ADD KEY `publisher_id` (`publisher_id`);
 
@@ -236,7 +238,8 @@ ALTER TABLE `Order_details`
 -- Indexes for table `Publishers`
 --
 ALTER TABLE `Publishers`
-  ADD PRIMARY KEY (`publisher_id`);
+  ADD PRIMARY KEY (`publisher_id`),
+  ADD UNIQUE KEY `publisher_name` (`publisher_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables

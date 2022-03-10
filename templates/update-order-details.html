@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Order Details</title>
+<title>Update Order Details</title>
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,10 @@
 </div>
 
 <header>
-    <h1 class="app-title">Order_details</h1>
+    <h1 class="app-title">Update Order_details</h1>
 </header>
 <main class="main-content">
-    <h2>Add New Order Detail</h2>
+    <h2>Update Order Detail</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=flashes>
@@ -29,26 +29,34 @@
             </div>
         {% endif %}
     {% endwith %}
-    <form id="add_order_detail" action="/order-details" method="POST">
+    <form id="update_order_detail" action="/update-order-details/{{ order_details[0]['order_details_id'] }}" method="POST">
         <label for="order_id">order_id:</label><br>
         <select name="order_id" id="order_id">
             {% for order in orders %}
-                <option value="{{ order.order_id }}">{{ order.order_id }}</option>
+                {% if order.order_id == order_details[0].order_id %}
+                    <option selected value="{{ order.order_id }}">{{ order.order_id }}</option>
+                {% else %}
+                    <option value="{{ order.order_id }}">{{ order.order_id }}</option>
+                {% endif %}
             {% endfor %}
         </select><br>
 
         <label for="book_id">book_id:</label><br>
         <select name="book_id" id="book_id">
             {% for book in books %}
-                <option value="{{ book.book_id }}">{{ book.book_id }}</option>
+                {% if book.title == order_details[0].title and book.author_name == order_details[0].author_name and book.publisher_name == order_details[0].publisher_name %}
+                    <option selected value="{{ book.book_id }}">{{ book.book_id }}</option>
+                {% else %}
+                    <option value="{{ book.book_id }}">{{ book.book_id }}</option>
+                {% endif %}
             {% endfor %}
         </select><br>
 
         <label for="cost">cost:</label><br>
-        <input type="number" min="0.00" step="0.01" id="cost" name="cost" required><br>
+        <input type="number" min="0.00" step="0.01" id="cost" name="cost" value="{{ order_details[0]['cost'] }}" required><br>
         <label for="quantity">quantity:</label><br>
-        <input type="number" min="1" step="1" id="quantity" name="quantity" required><br>
-        <input type="submit" value="Add" name="add_order_detail">
+        <input type="number" min="1" step="1" id="quantity" name="quantity" value="{{ order_details[0]['quantity'] }}" required><br>
+        <input type="submit" value="Update" name="update_order_detail">
     </form>
 
     <table>
@@ -58,7 +66,6 @@
                 <th>{{ key }}</th>
                 {% endfor %}
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -67,11 +74,6 @@
                 {% for key in order_detail.keys() %}
                 <td>{{ order_detail[key] }}</td>
                 {% endfor %}
-                <td>
-                    <form action="/update-order-details/{{ order_detail['order_details_id'] }}">
-                        <input type="submit" value="Update" />
-                    </form>
-                </td>
                 <td>
                     <form action="/delete-order-details/{{ order_detail['order_details_id'] }}">
                         <input type="submit" value="Delete" />
