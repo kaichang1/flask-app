@@ -176,6 +176,7 @@ def books():
                 cur.execute(query3)
                 publishers = cur.fetchall()
             
+            # If no matching rows, return an empty table
             if not books:
                 books = ({"book_id": "", "author_name": "", "publisher_name": "", "title": "", "year": "", "cost": "", "quantity": ""},)
 
@@ -203,6 +204,10 @@ def books():
             cur.execute(query3)
             publishers = cur.fetchall()
             publishers = sorted(publishers, key=lambda item: item['publisher_name'])
+
+            # If the database table is empty, return an empty table
+            if not books:
+                books = ({"book_id": "", "author_id": "", "publisher_id": "", "title": "", "year": "", "cost": "", "quantity": ""},)
 
         return render_template("books.html", books=books, authors=authors, publishers=publishers)
 
@@ -360,6 +365,7 @@ def authors():
             cur.execute(query, (author_name,))
             authors = cur.fetchall()
 
+            # If no matching rows, return an empty table
             if not authors:
                 authors = ({"author_id": "", "author_name": ""},)
 
@@ -369,6 +375,10 @@ def authors():
             cur = mysql.connection.cursor()
             cur.execute(query)
             authors = cur.fetchall()
+
+            # If the database table is empty, return an empty table
+            if not authors:
+                authors = ({"author_id": "", "author_name": ""},)
 
         return render_template("authors.html", authors=authors)
 
@@ -451,6 +461,7 @@ def publishers():
             cur.execute(query, (publisher_name,))
             publishers = cur.fetchall()
 
+            # If no matching rows, return an empty table
             if not publishers:
                 publishers = ({"publisher_id": "", "publisher_name": ""},)
 
@@ -460,6 +471,10 @@ def publishers():
             cur = mysql.connection.cursor()
             cur.execute(query)
             publishers = cur.fetchall()
+
+            # If the database table is empty, return an empty table
+            if not publishers:
+                publishers = ({"publisher_id": "", "publisher_name": ""},)
 
         return render_template('publishers.html', publishers=publishers)
 
@@ -552,6 +567,10 @@ def customers():
         cur = mysql.connection.cursor()
         cur.execute(query)
         customers = cur.fetchall()
+
+        # If the database table is empty, return an empty table
+        if not customers:
+            customers = ({"customer_id": "", "first_name": "", "last_name": "", "email": "", "phone": "", "street": "", "city": "", "zip": ""},)
 
         return render_template('customers.html', customers=customers)
 
@@ -647,6 +666,10 @@ def orders():
         cur.execute(query1)
         customers = cur.fetchall()
         customers = sorted(customers, key=lambda item: item['customer_id'])
+
+        # If the database table is empty, return an empty table
+        if not orders:
+            orders = ({"order_id ": "", "customer_id ": "", "date": "", "total_cost": ""},)
 
         return render_template('orders.html', orders=orders, customers=customers)
 
@@ -750,6 +773,10 @@ def order_details():
         cur.execute(query3)
         books = cur.fetchall()
         books = sorted(books, key=lambda item: item['book_id'])
+
+        # If the database table is empty, return an empty table
+        if not order_details:
+            order_details = ({"order_details_id  ": "", "order_id  ": "", "book_id ": "", "cost": "", "quantity": ""},)
 
         return render_template('order-details.html', order_details=order_details, orders=orders, books=books)
 
